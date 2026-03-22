@@ -1,32 +1,7 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>КРАКЕН — Дашборд</title>
-  <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body class="admin-shell" data-page="dashboard">
-  <aside class="admin-sidebar">
-    <div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div>
-    <nav>
-      <a href="./dashboard.html">Дашборд</a>
-      <a href="./orders.html">Заказы</a>
-      <a href="./products.html">Товары</a>
-      <a href="./settings.html">Настройки</a>
-    </nav>
-    <button class="logout-btn" id="logoutBtn">Выйти</button>
-  </aside>
-  <main class="admin-main">
-    <header class="admin-topbar"><h1>Дашборд</h1></header>
-    
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>КРАКЕН — Дашборд</title><link rel="stylesheet" href="../assets/css/admin.css"></head><body class="admin-shell" data-page="dashboard"><aside class="admin-sidebar"><div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div><nav><a href="./dashboard.html">Дашборд</a><a href="./orders.html">Заказы</a><a href="./products.html">Товары / JSON</a><a href="./settings.html">Настройки доставки</a></nav><button class="logout-btn" id="logoutBtn">Выйти</button></aside><main class="admin-main"><header class="admin-topbar"><h1>Дашборд</h1></header>
 <section class="admin-grid stats-grid" id="statsCards"></section>
+<section class="admin-grid three-col" id="sectionStats"></section>
 <section class="admin-card">
   <div class="card-head"><h2>Последние заказы</h2></div>
   <div id="recentOrders"></div>
-</section>
-
-  </main>
-  <script src="../assets/js/admin.js"></script>
-</body>
-</html>
+</section></main><script src="../assets/js/admin.js"></script></body></html>

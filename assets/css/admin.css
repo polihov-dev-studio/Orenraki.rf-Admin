@@ -1,5 +1,4 @@
-
-:root{--bg:#0d0f13;--bg2:#13161c;--card:#171b22;--line:rgba(255,255,255,.08);--text:#fff;--muted:#b7bcc7;--red:#c31424;--red2:#ff3b48;--shadow:0 22px 50px rgba(0,0,0,.35)}
+:root{--bg:#0d0f13;--card:#141821;--line:rgba(255,255,255,.08);--text:#fff;--muted:#afb7c6;--red:#c31424;--red2:#ff3b48;--shadow:0 20px 60px rgba(0,0,0,.35)}
 *{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:linear-gradient(180deg,#0b0c10,#10131a);color:var(--text)}
 a{text-decoration:none;color:inherit}button,input,textarea,select{font:inherit}
 .admin-login-page{min-height:100vh;display:grid;place-items:center;padding:20px}
@@ -16,16 +15,19 @@ a{text-decoration:none;color:inherit}button,input,textarea,select{font:inherit}
 .admin-main{padding:18px}.admin-topbar{margin-bottom:16px}
 .admin-card{background:linear-gradient(180deg,#171b22,#11141a);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
 .admin-grid{display:grid;gap:16px}.stats-grid{grid-template-columns:repeat(4,1fr)}.two-col{grid-template-columns:1fr 1fr}
+.three-col{grid-template-columns:repeat(3,1fr)} .four-col{grid-template-columns:repeat(4,1fr)}
 .stat-card h3{margin:0 0 8px;font-size:14px;color:var(--muted)}.stat-card strong{font-size:34px}
 .card-head,.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-.toolbar{flex-wrap:wrap}.toolbar select{min-width:180px}
-.order-row{display:grid;grid-template-columns:140px 130px 120px 1fr 120px 120px 120px;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.toolbar{flex-wrap:wrap}.toolbar select,.toolbar input{min-width:180px}
+.order-row{display:grid;grid-template-columns:140px 130px 120px 1fr 120px 140px 120px;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
 .order-head{color:var(--muted);font-size:13px}
 .status-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:#1b1f27;border:1px solid var(--line);font-size:13px}
 .status-new{background:rgba(255,255,255,.06)}.status-accepted{background:rgba(51,153,255,.16)}.status-cooking{background:rgba(255,166,0,.16)}.status-delivering{background:rgba(184,120,255,.16)}.status-done{background:rgba(46,194,126,.16)}.status-cancelled{background:rgba(255,59,72,.16)}
 textarea,input,select{width:100%;background:#12161d;border:1px solid var(--line);color:#fff;border-radius:14px;padding:12px 14px}
 .settings-list{margin:0;padding-left:18px;color:var(--muted)}
 .modal{position:fixed;inset:0;display:none;z-index:50}.modal.is-open{display:block}.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.65)}
-.modal-panel{position:relative;width:min(760px,calc(100% - 24px));margin:4vh auto;background:#101218;border:1px solid var(--line);border-radius:24px;padding:22px}.modal-close{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:14px;background:#171b22;border:1px solid var(--line);color:#fff}
-@media (max-width:1100px){.stats-grid,.two-col{grid-template-columns:1fr 1fr}.order-row{grid-template-columns:1fr 1fr 1fr}.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}}
-@media (max-width:720px){.stats-grid,.two-col{grid-template-columns:1fr}.order-row{grid-template-columns:1fr}}
+.modal-panel{position:relative;width:min(900px,calc(100% - 24px));margin:4vh auto;background:#101218;border:1px solid var(--line);border-radius:24px;padding:22px;max-height:92vh;overflow:auto}.modal-close{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:14px;background:#171b22;border:1px solid var(--line);color:#fff}
+.label-grid{display:grid;gap:8px;margin-bottom:12px}.label-grid h3{margin:0 0 4px}.subtle{color:var(--muted)}
+.tag{display:inline-flex;padding:6px 10px;border-radius:999px;background:#161920;border:1px solid var(--line);font-size:12px}
+@media (max-width:1180px){.stats-grid,.two-col,.three-col,.four-col{grid-template-columns:1fr 1fr}.order-row{grid-template-columns:1fr 1fr 1fr}.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:static;height:auto}}
+@media (max-width:720px){.stats-grid,.two-col,.three-col,.four-col{grid-template-columns:1fr}.order-row{grid-template-columns:1fr}}

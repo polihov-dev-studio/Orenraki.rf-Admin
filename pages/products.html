@@ -1,40 +1,14 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>КРАКЕН — Товары</title>
-  <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body class="admin-shell" data-page="products">
-  <aside class="admin-sidebar">
-    <div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div>
-    <nav>
-      <a href="./dashboard.html">Дашборд</a>
-      <a href="./orders.html">Заказы</a>
-      <a href="./products.html">Товары</a>
-      <a href="./settings.html">Настройки</a>
-    </nav>
-    <button class="logout-btn" id="logoutBtn">Выйти</button>
-  </aside>
-  <main class="admin-main">
-    <header class="admin-topbar"><h1>Товары</h1></header>
-    
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>КРАКЕН — Товары / JSON</title><link rel="stylesheet" href="../assets/css/admin.css"></head><body class="admin-shell" data-page="products"><aside class="admin-sidebar"><div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div><nav><a href="./dashboard.html">Дашборд</a><a href="./orders.html">Заказы</a><a href="./products.html">Товары / JSON</a><a href="./settings.html">Настройки доставки</a></nav><button class="logout-btn" id="logoutBtn">Выйти</button></aside><main class="admin-main"><header class="admin-topbar"><h1>Товары / JSON</h1></header>
 <section class="admin-grid two-col">
   <section class="admin-card">
     <div class="card-head"><h2>site.json</h2></div>
-    <textarea id="siteJsonEditor" rows="18"></textarea>
+    <textarea id="siteJsonEditor" rows="22"></textarea>
     <div class="toolbar"><button class="btn btn-primary" id="saveSiteJson">Сохранить site.json</button></div>
   </section>
   <section class="admin-card">
     <div class="card-head"><h2>products.json</h2></div>
-    <textarea id="productsJsonEditor" rows="18"></textarea>
+    <textarea id="productsJsonEditor" rows="22"></textarea>
     <div class="toolbar"><button class="btn btn-primary" id="saveProductsJson">Сохранить products.json</button></div>
   </section>
 </section>
-<div class="form-note" id="saveJsonNote"></div>
-
-  </main>
-  <script src="../assets/js/admin.js"></script>
-</body>
-</html>
+<div class="form-note" id="saveJsonNote"></div></main><script src="../assets/js/admin.js"></script></body></html>

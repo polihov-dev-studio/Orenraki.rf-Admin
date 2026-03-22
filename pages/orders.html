@@ -1,55 +1,14 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>КРАКЕН — Заказы</title>
-  <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body class="admin-shell" data-page="orders">
-  <aside class="admin-sidebar">
-    <div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div>
-    <nav>
-      <a href="./dashboard.html">Дашборд</a>
-      <a href="./orders.html">Заказы</a>
-      <a href="./products.html">Товары</a>
-      <a href="./settings.html">Настройки</a>
-    </nav>
-    <button class="logout-btn" id="logoutBtn">Выйти</button>
-  </aside>
-  <main class="admin-main">
-    <header class="admin-topbar"><h1>Заказы</h1></header>
-    
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>КРАКЕН — Заказы</title><link rel="stylesheet" href="../assets/css/admin.css"></head><body class="admin-shell" data-page="orders"><aside class="admin-sidebar"><div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div><nav><a href="./dashboard.html">Дашборд</a><a href="./orders.html">Заказы</a><a href="./products.html">Товары / JSON</a><a href="./settings.html">Настройки доставки</a></nav><button class="logout-btn" id="logoutBtn">Выйти</button></aside><main class="admin-main"><header class="admin-topbar"><h1>Заказы</h1></header>
 <section class="admin-card">
   <div class="toolbar">
-    <select id="filterSection">
-      <option value="">Все разделы</option>
-      <option value="seafood">Морепродукты</option>
-      <option value="kitchen">Кухня</option>
-      <option value="restaurant">Ресторан</option>
-    </select>
-    <select id="filterStatus">
-      <option value="">Все статусы</option>
-      <option value="new">Новый</option>
-      <option value="accepted">Принят</option>
-      <option value="cooking">Готовится</option>
-      <option value="delivering">Доставляется</option>
-      <option value="done">Выполнен</option>
-      <option value="cancelled">Отменен</option>
-    </select>
+    <select id="filterSection"><option value="">Все разделы</option><option value="seafood">Морепродукты</option><option value="kitchen">Кухня</option><option value="restaurant">Ресторан</option></select>
+    <select id="filterStatus"><option value="">Все статусы</option><option value="new">Новый</option><option value="accepted">Принят</option><option value="cooking">Готовится</option><option value="delivering">Доставляется</option><option value="done">Выполнен</option><option value="cancelled">Отменен</option></select>
+    <input id="filterPhone" placeholder="Телефон">
     <button class="btn btn-dark" id="applyFilters">Применить</button>
   </div>
   <div id="ordersTable"></div>
 </section>
 <div class="modal" id="adminModal">
   <div class="modal-overlay" data-close-admin-modal></div>
-  <div class="modal-panel admin-modal-panel">
-    <button class="modal-close" data-close-admin-modal>✕</button>
-    <div id="adminModalContent"></div>
-  </div>
-</div>
-
-  </main>
-  <script src="../assets/js/admin.js"></script>
-</body>
-</html>
+  <div class="modal-panel"><button class="modal-close" data-close-admin-modal>✕</button><div id="adminModalContent"></div></div>
+</div></main><script src="../assets/js/admin.js"></script></body></html>

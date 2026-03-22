@@ -1,51 +1,23 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>КРАКЕН — Настройки</title>
-  <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body class="admin-shell" data-page="settings">
-  <aside class="admin-sidebar">
-    <div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div>
-    <nav>
-      <a href="./dashboard.html">Дашборд</a>
-      <a href="./orders.html">Заказы</a>
-      <a href="./products.html">Товары</a>
-      <a href="./settings.html">Настройки</a>
-    </nav>
-    <button class="logout-btn" id="logoutBtn">Выйти</button>
-  </aside>
-  <main class="admin-main">
-    <header class="admin-topbar"><h1>Настройки</h1></header>
-    
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>КРАКЕН — Настройки доставки</title><link rel="stylesheet" href="../assets/css/admin.css"></head><body class="admin-shell" data-page="settings"><aside class="admin-sidebar"><div class="admin-brand"><div class="brand-mark">К</div><div><strong>КРАКЕН</strong><span>панель управления</span></div></div><nav><a href="./dashboard.html">Дашборд</a><a href="./orders.html">Заказы</a><a href="./products.html">Товары / JSON</a><a href="./settings.html">Настройки доставки</a></nav><button class="logout-btn" id="logoutBtn">Выйти</button></aside><main class="admin-main"><header class="admin-topbar"><h1>Настройки доставки</h1></header>
 <section class="admin-grid two-col">
   <section class="admin-card">
-    <div class="card-head"><h2>Telegram темы</h2></div>
-    <p>Настраивается через секреты Worker:</p>
-    <ul class="settings-list">
-      <li>BOT_TOKEN</li>
-      <li>CHAT_ID</li>
-      <li>THREAD_ID_SEAFOOD</li>
-      <li>THREAD_ID_KITCHEN</li>
-      <li>THREAD_ID_RESTAURANT</li>
-    </ul>
+    <div class="card-head"><h2>Доставка</h2></div>
+    <div class="label-grid"><span>Бесплатная доставка от суммы заказа</span><input id="freeFromSubtotal" type="number" min="0"></div>
+    <div class="label-grid"><span>Доплата, если сумма ниже минимума</span><input id="belowMinExtraFee" type="number" min="0"></div>
+    <div class="label-grid"><span>Точки самовывоза (JSON-массив)</span><textarea id="pickupPointsEditor" rows="10"></textarea></div>
   </section>
   <section class="admin-card">
-    <div class="card-head"><h2>Статусы</h2></div>
-    <ul class="settings-list">
-      <li>Новый</li>
-      <li>Принят</li>
-      <li>Готовится</li>
-      <li>Доставляется</li>
-      <li>Выполнен</li>
-      <li>Отменен + комментарий</li>
-    </ul>
+    <div class="card-head"><h2>Промокоды</h2></div>
+    <div class="subtle">Редактируйте массив объектов. Пример: <span class="tag">code</span> <span class="tag">type</span> <span class="tag">value</span> <span class="tag">minSubtotal</span> <span class="tag">active</span></div>
+    <textarea id="promoCodesEditor" rows="18"></textarea>
   </section>
 </section>
-
-  </main>
-  <script src="../assets/js/admin.js"></script>
-</body>
-</html>
+<section class="admin-card">
+  <div class="card-head"><h2>Telegram темы и статусы</h2></div>
+  <ul class="settings-list">
+    <li>Секреты Worker: BOT_TOKEN, CHAT_ID, THREAD_ID_SEAFOOD, THREAD_ID_KITCHEN, THREAD_ID_RESTAURANT</li>
+    <li>Статусы: Новый, Принят, Готовится, Доставляется, Выполнен, Отменен</li>
+    <li>При отмене можно указать комментарий, он сохраняется в истории заказа.</li>
+  </ul>
+</section>
+<div class="toolbar"><button class="btn btn-primary" id="saveSettingsBtn">Сохранить настройки</button><div class="form-note" id="settingsNote"></div></div></main><script src="../assets/js/admin.js"></script></body></html>

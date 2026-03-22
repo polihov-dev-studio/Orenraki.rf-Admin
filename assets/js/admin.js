@@ -1,6 +1,5 @@
-
 const ADMIN_WORKER_URL = "https://YOUR-WORKER.workers.dev";
-const ADMIN_TOKEN_KEY = "kraken_admin_token_v1";
+const ADMIN_TOKEN_KEY = "kraken_admin_token_v2";
 
 const statusLabels = {
   new: "Новый",
@@ -34,6 +33,7 @@ async function initAdmin() {
   if (page === "dashboard") return loadDashboard();
   if (page === "orders") return loadOrders();
   if (page === "products") return loadEditors();
+  if (page === "settings") return loadSettings();
 }
 
 function initLogin() {
@@ -53,6 +53,10 @@ function initLogin() {
   });
 }
 
+function statCard(title, value) {
+  return `<article class="admin-card stat-card"><h3>${title}</h3><strong>${value}</strong></article>`;
+}
+
 async function loadDashboard() {
   const data = await api("/api/admin/stats");
   document.getElementById("statsCards").innerHTML = `
@@ -61,11 +65,16 @@ async function loadDashboard() {
     ${statCard("Отменено", data.cancelledOrders)}
     ${statCard("Выручка", `${Number(data.revenue).toLocaleString("ru-RU")} ₽`)}
   `;
+  const sectionStats = data.sections || {};
+  document.getElementById("sectionStats").innerHTML = Object.entries(sectionStats).map(([key, value]) => `
+    <article class="admin-card">
+      <h3>${value.label}</h3>
+      <p class="subtle">Заказы: ${value.total}</p>
+      <p class="subtle">Выполнено: ${value.done}</p>
+      <p class="subtle">Выручка: ${Number(value.revenue).toLocaleString("ru-RU")} ₽</p>
+    </article>
+  `).join("");
   document.getElementById("recentOrders").innerHTML = renderOrdersTable(data.recentOrders, false);
-}
-
-function statCard(title, value) {
-  return `<article class="admin-card stat-card"><h3>${title}</h3><strong>${value}</strong></article>`;
 }
 
 async function loadOrders() {
@@ -76,9 +85,11 @@ async function loadOrders() {
 async function renderOrders() {
   const section = document.getElementById("filterSection").value;
   const status = document.getElementById("filterStatus").value;
+  const phone = document.getElementById("filterPhone").value.trim();
   const params = new URLSearchParams();
   if (section) params.set("section", section);
   if (status) params.set("status", status);
+  if (phone) params.set("phone", phone);
   const data = await api(`/api/admin/orders?${params.toString()}`);
   document.getElementById("ordersTable").innerHTML = renderOrdersTable(data.orders, true);
   document.querySelectorAll("[data-open-order]").forEach(btn => btn.addEventListener("click", () => openOrder(btn.dataset.id)));
@@ -94,10 +105,10 @@ function renderOrdersTable(orders, interactive) {
       <div>${order.id}</div>
       <div>${new Date(order.createdAt).toLocaleString("ru-RU")}</div>
       <div>${order.sectionLabel}</div>
-      <div>${order.customer.name}</div>
+      <div>${order.customer?.name || "—"}</div>
       <div>${Number(order.total).toLocaleString("ru-RU")} ₽</div>
       <div><span class="status-pill status-${order.status}">${statusLabels[order.status] || order.status}</span></div>
-      ${interactive ? `<div><button class="btn btn-dark" data-open-order="${order.id}" data-id="${order.id}">Открыть</button></div>` : `<div>${order.customer.phone}</div>`}
+      ${interactive ? `<div><button class="btn btn-dark" data-open-order="${order.id}" data-id="${order.id}">Открыть</button></div>` : `<div>${order.customer?.phone || "—"}</div>`}
     </div>
   `).join("");
   return head + rows;
@@ -106,14 +117,17 @@ function renderOrdersTable(orders, interactive) {
 async function openOrder(id) {
   const data = await api(`/api/admin/orders/${id}`);
   const order = data.order;
-  const items = order.items.map(i => `<li>${i.name} × ${i.qty} — ${Number(i.price * i.qty).toLocaleString("ru-RU")} ₽</li>`).join("");
+  const items = (order.items || []).map(i => `<li>${i.name} × ${i.qty} — ${Number(i.price * i.qty).toLocaleString("ru-RU")} ₽</li>`).join("");
   const history = (order.history || []).map(h => `<li>${new Date(h.at).toLocaleString("ru-RU")} — ${h.text}</li>`).join("");
   document.getElementById("adminModalContent").innerHTML = `
     <h2>Заказ ${order.id}</h2>
     <p><strong>Раздел:</strong> ${order.sectionLabel}</p>
-    <p><strong>Клиент:</strong> ${order.customer.name}, ${order.customer.phone}</p>
-    <p><strong>Адрес:</strong> ${order.customer.address}</p>
-    <p><strong>Комментарий:</strong> ${order.customer.comment || "—"}</p>
+    <p><strong>Клиент:</strong> ${order.customer?.name || "—"}, ${order.customer?.phone || "—"}</p>
+    <p><strong>Адрес:</strong> ${order.fulfillment?.type === "pickup" ? `${order.fulfillment?.pickupPointLabel || ""}` : `${order.customer?.address || "—"}`}</p>
+    <p><strong>Доставка/самовывоз:</strong> ${order.fulfillment?.type === "pickup" ? "Самовывоз" : "Доставка"}</p>
+    <p><strong>Оплата:</strong> ${order.payment?.method === "cash" ? "Наличными" : "Переводом при получении"}</p>
+    <p><strong>Комментарий:</strong> ${order.customer?.comment || "—"}</p>
+    <p><strong>Промокод:</strong> ${order.extras?.promoCode || "—"}</p>
     <p><strong>Сумма:</strong> ${Number(order.total).toLocaleString("ru-RU")} ₽</p>
     <h3>Состав</h3>
     <ul>${items}</ul>
@@ -150,16 +164,36 @@ async function loadEditors() {
   document.getElementById("saveProductsJson").addEventListener("click", () => saveJson("products.json", document.getElementById("productsJsonEditor").value));
 }
 
-async function saveJson(path, content) {
+async function loadSettings() {
+  const data = await api("/api/admin/config");
+  const site = data.site || {};
+  document.getElementById("freeFromSubtotal").value = site.delivery?.freeFromSubtotal ?? 0;
+  document.getElementById("belowMinExtraFee").value = site.delivery?.belowMinExtraFee ?? 0;
+  document.getElementById("pickupPointsEditor").value = JSON.stringify(site.pickupPoints || [], null, 2);
+  document.getElementById("promoCodesEditor").value = JSON.stringify(site.promoCodes || [], null, 2);
+  document.getElementById("saveSettingsBtn").addEventListener("click", async () => {
+    const note = document.getElementById("settingsNote");
+    note.textContent = "Сохранение...";
+    try {
+      site.delivery ||= {};
+      site.delivery.freeFromSubtotal = Number(document.getElementById("freeFromSubtotal").value || 0);
+      site.delivery.belowMinExtraFee = Number(document.getElementById("belowMinExtraFee").value || 0);
+      site.pickupPoints = JSON.parse(document.getElementById("pickupPointsEditor").value || "[]");
+      site.promoCodes = JSON.parse(document.getElementById("promoCodesEditor").value || "[]");
+      await saveJson("site.json", JSON.stringify(site, null, 2), false);
+      note.textContent = "Настройки сохранены";
+    } catch (err) {
+      note.textContent = err.message;
+    }
+  });
+}
+
+async function saveJson(path, content, updateNote = true) {
   const note = document.getElementById("saveJsonNote");
-  note.textContent = "Сохранение...";
-  try {
-    JSON.parse(content);
-    await api("/api/admin/save-json", { method:"POST", body: JSON.stringify({ path, content }) });
-    note.textContent = `${path} сохранён`;
-  } catch (err) {
-    note.textContent = err.message;
-  }
+  if (note && updateNote) note.textContent = "Сохранение...";
+  JSON.parse(content);
+  await api("/api/admin/save-json", { method:"POST", body: JSON.stringify({ path, content }) });
+  if (note && updateNote) note.textContent = `${path} сохранён`;
 }
 
 window.addEventListener("DOMContentLoaded", initAdmin);
